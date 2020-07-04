@@ -1,6 +1,8 @@
 package com.ulooke.pcremotecontrol;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +17,17 @@ public class MainActivity extends AppCompatActivity {
 
         mainFragment = new MainFragment();
         controlFragment = new ControlFragment();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Fragment curFragment = getSupportFragmentManager().findFragmentById(R.id.visibleFragment);
+        if(curFragment.getId() == mainFragment.getId()){
+            super.onBackPressed();
+        }
+        else{
+            onFragmentChanged(0);
+        }
     }
 
     public void onFragmentChanged(int index){
