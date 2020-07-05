@@ -1,14 +1,18 @@
 package com.ulooke.pcremotecontrol;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.TextView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -57,10 +61,42 @@ public class ControlFragment extends Fragment {
         }
     }
 
+    public int prevX;
+    public int prevY;
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.fragment_control, container, false);
+
+        TextView touchAreaTextView = rootView.findViewById(R.id.touchAreaTextView);
+
+        touchAreaTextView.setOnTouchListener(new TextView.OnTouchListener(){
+
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                int x = (int) motionEvent.getX();
+                int y = (int) motionEvent.getY();
+                int touchCount = motionEvent.getPointerCount();
+                String type = "INVALID";
+                switch (motionEvent.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        type = "DOWN";
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        type = "MOVE";
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        type = "UP";
+                        break;
+                }
+                Log.d("TouchEvent", String.format("count : %d, type : %s, curX : %d, curY : %d, prevX : %d, prevY : %d", touchCount, type, x,y,prevX,prevY));
+                prevX = x;
+                prevY = y;
+
+                return true;
+            }
+        });
         showKeyboard(getContext());
 
         return rootView;

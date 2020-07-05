@@ -80,14 +80,14 @@ public class MainFragment extends Fragment {
             }
         });
 
-        final TextView shareTextView = (TextView) rootView.findViewById(R.id.shareTextView);
+        TextView shareTextView = (TextView) rootView.findViewById(R.id.shareTextView);
         // Set underline to textView
         shareTextView.setPaintFlags(shareTextView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
         shareTextView.setOnClickListener(new TextView.OnClickListener(){
             @Override
             public void onClick(View view) {
-                String shareLink = shareTextView.getText().toString();
+                String shareLink = ((TextView)view).getText().toString();
                 Intent share = new Intent(android.content.Intent.ACTION_SEND);
                 share.setType("text/plain");
                 share.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
