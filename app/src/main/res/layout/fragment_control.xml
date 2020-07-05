@@ -12,13 +12,43 @@
         android:background="#FFFFFF">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/touchAreaTextView"
             android:layout_width="410dp"
             android:layout_height="338dp"
             android:text="TextView"
+            app:layout_constraintBottom_toTopOf="@+id/macroLayout"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TableLayout
+            android:id="@+id/macroLayout"
+            android:layout_width="407dp"
+            android:layout_height="90dp"
+            android:layout_marginBottom="300dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </TableLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

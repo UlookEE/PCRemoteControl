@@ -1,5 +1,7 @@
 package com.ulooke.pcremotecontrol;
 
+import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -63,8 +66,10 @@ public class MainFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.fragment_main, container, false);
-        Button connectButton = rootView.findViewById(R.id.connectButton);
+
+        Button connectButton = (Button) rootView.findViewById(R.id.connectButton);
         connectButton.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -72,6 +77,23 @@ public class MainFragment extends Fragment {
                 MainActivity mainActivity= (MainActivity)getActivity();
                 mainActivity.onFragmentChanged(1);
 
+            }
+        });
+
+        final TextView shareTextView = (TextView) rootView.findViewById(R.id.shareTextView);
+        // Set underline to textView
+        shareTextView.setPaintFlags(shareTextView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+
+        shareTextView.setOnClickListener(new TextView.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                String shareLink = shareTextView.getText().toString();
+                Intent share = new Intent(android.content.Intent.ACTION_SEND);
+                share.setType("text/plain");
+                share.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+                share.putExtra(Intent.EXTRA_SUBJECT, "Download from here");
+                share.putExtra(Intent.EXTRA_TEXT, shareLink);
+                startActivity(Intent.createChooser(share, "Share link!"));
             }
         });
         return rootView;

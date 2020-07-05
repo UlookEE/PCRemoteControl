@@ -9,7 +9,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FFFFFF">
+        android:background="#FFFFFF"
+        android:clickable="false">
 
         <TextView
             android:id="@+id/titleTextView"
@@ -56,18 +57,22 @@
             android:layout_height="38dp"
             android:gravity="center"
             android:text="Download From"
-            app:layout_constraintBottom_toTopOf="@+id/downloadTextView2"
+            app:layout_constraintBottom_toTopOf="@+id/shareTextView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@+id/downloadTextView2"
+            android:id="@+id/shareTextView"
             android:layout_width="318dp"
             android:layout_height="66dp"
             android:layout_marginBottom="164dp"
+            android:clickable="true"
             android:gravity="center"
-            android:text="www.naver.com"
+            android:singleLine="false"
+            android:text="https://www.naver.com"
+            android:textColor="#3545A3"
             android:textSize="24sp"
+            android:textStyle="bold|italic"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
