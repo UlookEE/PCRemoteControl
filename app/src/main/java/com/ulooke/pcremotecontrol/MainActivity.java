@@ -4,8 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.WindowManager;
 
 public class MainActivity extends AppCompatActivity {
     MainFragment mainFragment;

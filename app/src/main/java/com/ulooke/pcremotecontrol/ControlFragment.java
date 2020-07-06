@@ -1,17 +1,22 @@
 package com.ulooke.pcremotecontrol;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.TextView;
 
 /**
@@ -69,8 +74,15 @@ public class ControlFragment extends Fragment {
                              Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.fragment_control, container, false);
 
-        TextView touchAreaTextView = rootView.findViewById(R.id.touchAreaTextView);
+        // Prevent background fragment touched
+        rootView.setOnTouchListener(new ViewGroup.OnTouchListener(){
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                return true;
+            }
+        });
 
+        TextView touchAreaTextView = rootView.findViewById(R.id.touchAreaTextView);
         touchAreaTextView.setOnTouchListener(new TextView.OnTouchListener(){
 
             @Override
@@ -97,12 +109,61 @@ public class ControlFragment extends Fragment {
                 return true;
             }
         });
-        showKeyboard(getContext());
+
+        // Get textchanged event
+        EditText inputBufferEditText = rootView.findViewById(R.id.inputBufferEditText);
+        inputBufferEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                Log.d("UlookEE", charSequence.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        // Open keyboard when click empty space
+//        ConstraintLayout extraSpaceConstranintLayout = rootView.findViewById(R.id.extraSpaceConstranintLayout);
+//        extraSpaceConstranintLayout.setOnTouchListener(new ConstraintLayout.OnTouchListener(){
+//            @Override
+//            public boolean onTouch(View view, MotionEvent motionEvent) {
+//                showKeyboard(getActivity());
+//                return false;
+//            }
+//        });
+
 
         return rootView;
+
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        hideKeyboard(getActivity());
+        showKeyboard(getActivity());
     }
 
     public static void showKeyboard(Context context) {
-        ((InputMethodManager) (context).getSystemService(Context.INPUT_METHOD_SERVICE)).toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+        EditText toFocus = ((Activity)context).findViewById(R.id.inputBufferEditText);
+        toFocus.requestFocus();
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(toFocus, InputMethodManager.SHOW_IMPLICIT);
+    }
+
+    public static void hideKeyboard(Activity activity) {
+
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        View focusedView = activity.getCurrentFocus();
+        if(focusedView != null)
+            imm.hideSoftInputFromWindow(focusedView.getWindowToken(), 0);
     }
 }
