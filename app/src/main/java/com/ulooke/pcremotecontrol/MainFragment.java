@@ -1,5 +1,6 @@
 package com.ulooke.pcremotecontrol;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -11,7 +12,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+
+import com.google.zxing.integration.android.IntentIntegrator;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,6 +39,7 @@ public class MainFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
 
     public MainFragment() {
         // Required empty public constructor
@@ -85,7 +97,12 @@ public class MainFragment extends Fragment {
         readQRCodeButton.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View view) {
-
+                IntentIntegrator integrator = new IntentIntegrator(getActivity());
+                integrator.setOrientationLocked(false);
+                integrator.initiateScan();
+                //new IntentIntegrator(getActivity()).initiateScan();
+                //Log.d(TAG, "onClick: " + MainFragment.this.toString());
+                //IntentIntegrator.forSupportFragment(MainFragment.this).initiateScan();
             }
         });
 
@@ -106,5 +123,59 @@ public class MainFragment extends Fragment {
             }
         });
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadCode();
+        Bundle bundleMainFragment = ((MainActivity)getActivity()).getBundleMainFragment();
+        String codeEditTextString = bundleMainFragment.getString("codeEditText");
+        if(codeEditTextString != null) {
+            bundleMainFragment.remove("codeEditText");
+            setCodeEditText(codeEditTextString);
+        }
+    }
+
+    public void saveCode(String str){
+        String filename = "code.txt";
+        FileOutputStream outputStream;
+        try {
+            outputStream = getActivity().openFileOutput(filename, Context.MODE_PRIVATE);
+            outputStream.write(str.getBytes());
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void loadCode(){
+        String filename = "code.txt";
+        byte[] bytes = new byte[1024];
+        try {
+            StringBuffer sb = new StringBuffer();
+            FileInputStream inputStream = getActivity().openFileInput(filename);
+            int readInt;
+            while((readInt = inputStream.read(bytes)) != -1){
+                sb.append(new String(bytes, 0, readInt));
+            };
+            String str = sb.toString();
+            setCodeEditText(str);
+            inputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setCodeEditText(String str){
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                EditText codeEditText = (EditText) getView().findViewById(R.id.codeEditText);
+                Log.d("UlookEE", "run: " + codeEditText.toString());
+                codeEditText.setText(str);
+            }
+        });
+        saveCode(str);
     }
 }
