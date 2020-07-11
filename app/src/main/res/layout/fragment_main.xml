@@ -28,17 +28,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
 
-        <Button
-            android:id="@+id/connectButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="72dp"
-            android:text="Connect"
-            app:layout_constraintBottom_toTopOf="@+id/downloadTextView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/codeEditText" />
 
         <EditText
             android:id="@+id/codeEditText"
@@ -50,29 +39,65 @@
             android:gravity="center"
             android:hint="Input code for connect"
             android:inputType="textPersonName"
-            app:layout_constraintBottom_toTopOf="@+id/connectButton"
+            app:layout_constraintBottom_toTopOf="@+id/buttonLinearLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
 
+        <LinearLayout
+            android:id="@+id/buttonLinearLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="100dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="100dp"
+            android:layout_marginRight="100dp"
+            android:layout_marginBottom="105dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/downloadTextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/codeEditText"
+            app:layout_constraintVertical_bias="0.0">
+
+            <Button
+                android:id="@+id/readQRCodeButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="QRCode"
+                app:layout_constraintBottom_toTopOf="@+id/downloadTextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/codeEditText" />
+
+            <Button
+                android:id="@+id/connectButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="Connect"
+                app:layout_constraintBottom_toTopOf="@+id/downloadTextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/codeEditText" />
+        </LinearLayout>
+
         <TextView
             android:id="@+id/downloadTextView"
-            android:layout_width="318dp"
-            android:layout_height="38dp"
-            android:layout_marginTop="67dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Download From"
             app:layout_constraintBottom_toTopOf="@+id/shareTextView"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.505"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/connectButton" />
+            app:layout_constraintTop_toBottomOf="@+id/buttonLinearLayout" />
 
         <TextView
             android:id="@+id/shareTextView"
-            android:layout_width="318dp"
-            android:layout_height="66dp"
-            android:layout_marginBottom="168dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginBottom="100dp"
             android:clickable="true"
             android:gravity="center"
             android:singleLine="false"
@@ -82,9 +107,9 @@
             android:textStyle="bold|italic"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.505"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/downloadTextView" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

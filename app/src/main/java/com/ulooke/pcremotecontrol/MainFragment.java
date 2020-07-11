@@ -74,8 +74,17 @@ public class MainFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Log.d("test call", "onclick called");
+
                 MainActivity mainActivity= (MainActivity)getActivity();
                 mainActivity.onFragmentChanged(1);
+
+            }
+        });
+
+        Button readQRCodeButton = (Button) rootView.findViewById(R.id.readQRCodeButton);
+        readQRCodeButton.setOnClickListener(new Button.OnClickListener(){
+            @Override
+            public void onClick(View view) {
 
             }
         });
